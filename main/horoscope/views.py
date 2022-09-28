@@ -30,3 +30,6 @@ def get_info_about(request, sign_zodiac: str):
 
 def get_info_about_num(request, sign_zodiac: int):
     return HttpResponse(f"This number is {sign_zodiac}")
+
+def test():
+    pass
