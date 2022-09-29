@@ -1,6 +1,6 @@
 from django.shortcuts import render
-from django.http import HttpResponse, HttpResponseNotFound
-
+from django.http import HttpResponse, HttpResponseNotFound, HttpResponseRedirect
+from django.urls import reverse
 # Create your views here.
 
 zodiac_dict = {
@@ -19,6 +19,19 @@ zodiac_dict = {
 }
 
 
+def index(reques):
+    zodiacs = list(zodiac_dict)
+    li_elements = ''
+    for sign in zodiacs:
+        redirect_path = reverse("horoscope-name", args=(sign,))
+        li_elements += f"<li> <a href='{redirect_path}'>{sign.title()}</a> </li>"
+    responce = f"""
+    <ul>
+        {li_elements}
+    </ul>
+    """
+    return HttpResponse(responce)
+
 def get_info_about(request, sign_zodiac: str):
     description = zodiac_dict.get(sign_zodiac, None)
     if description:
@@ -29,7 +42,11 @@ def get_info_about(request, sign_zodiac: str):
 
 
 def get_info_about_num(request, sign_zodiac: int):
-    return HttpResponse(f"This number is {sign_zodiac}")
+    zodiacs = list(zodiac_dict)
+    if sign_zodiac > len(zodiacs):
+        return HttpResponseNotFound(f"Неизвестный номер зодиака - {sign_zodiac}")
+    else:
+        name_zodiac = zodiacs[sign_zodiac-1]
+        redirect_url = reverse("horoscope-name", args=(name_zodiac, ))
+        return HttpResponseRedirect(redirect_url)
 
-def test():
-    pass
