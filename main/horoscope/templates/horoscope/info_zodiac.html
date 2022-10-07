@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <h1>Horoscope app</h1>
+    {% if description_zodiac is None %}
+        <h2>Неправильный знак зодиака</h2>
+    {% else %}
+        <h2>{{ description_zodiac }}</h2>
+    {% endif  %}
+</body>
+</html>
