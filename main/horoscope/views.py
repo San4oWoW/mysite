@@ -20,18 +20,12 @@ zodiac_dict = {
 }
 
 
-def index(reques):
+def index(request):
     zodiacs = list(zodiac_dict)
-    li_elements = ''
-    for sign in zodiacs:
-        redirect_path = reverse("horoscope-name", args=(sign,))
-        li_elements += f"<li> <a href='{redirect_path}'>{sign.title()}</a> </li>"
-    responce = f"""
-    <ul>
-        {li_elements}
-    </ul>
-    """
-    return HttpResponse(responce)
+    context = {
+        "zodiacs": zodiacs
+    }
+    return render(request, 'horoscope/index.html', context=context)
 
 
 def get_info_about(request, sign_zodiac: str):
